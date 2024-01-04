@@ -9,8 +9,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 100
-        versionName '1.0.0'
+        versionCode 110
+        versionName '1.1.0'
     }
 
     buildTypes {
@@ -34,7 +34,7 @@ dependencies {
 //配置以下信息，可直接上传到本地maven仓，当代码在jitPack中时，也会执行这个任务，上传其仓库。
 //本地执行打印：（制品包仓库地址：file://C:\Users\chaojun\.m2\repository）
 //gitpack打印：（制品包仓库地址：file:///home/jitpack/.m2/repository）
-//jitpack不会使用下面配置的pom信息，而是会直接使用com.github.zhangchaojun:baselibrary:1.0.5,即组织名：仓库名：releaseTag
+//jitpack不会使用下面配置的pom信息，而是会直接使用com.github.zhangchaojun:aidlbus:1.1.0,即组织名：仓库名：releaseTag
 def defaultLocalRepo = "file://" + new File(System.getProperty("user.home"), '.m2/repository').absolutePath
 uploadArchives {
     repositories.mavenDeployer {
@@ -44,7 +44,7 @@ uploadArchives {
         // 配置pom信息
         pom.groupId = "com.cj.library"//远程无所谓
         pom.artifactId = "aidlbus"
-        pom.version = "1.0.0"
+        pom.version = "1.1.0"
         pom.packaging = "aar"
     }
 }
