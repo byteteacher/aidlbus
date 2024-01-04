@@ -48,20 +48,18 @@ public class AIDLServiceImpl {
         return isBind;
     }
 
-    /**
-     * 操作类单例获取接口
-     *
-     * @return 操作类实例
-     */
+
+    // 私有静态内部类，该类在加载时只会执行一次
+    private static class SingletonHolder {
+        private static final AIDLServiceImpl INSTANCE = new AIDLServiceImpl();
+    }
+
+    // 私有构造函数，防止外部类创建实例
+    private AIDLServiceImpl() {}
+
+    // 提供一个静态方法获取实例
     public static AIDLServiceImpl getInstance() {
-        if (instance == null) {
-            synchronized (AIDLServiceImpl.class) {
-                if (instance == null) {
-                    instance = new AIDLServiceImpl();
-                }
-            }
-        }
-        return instance;
+        return SingletonHolder.INSTANCE;
     }
 
 
@@ -132,7 +130,6 @@ public class AIDLServiceImpl {
      */
     public String post(RequestBean requestBean, ILTAidlCallback callback) {
         return post(new Gson().toJson(requestBean), callback);
-
     }
 
 
@@ -142,24 +139,24 @@ public class AIDLServiceImpl {
      * @param retCode 返回码
      * @param msgJson 返回数据json格式
      */
-    private ResponseBean createResponseBean(int retCode, String msgJson) {
+    private static ResponseBean createResponseBean(int retCode, String msgJson) {
         ResponseBean responseBean = new ResponseBean();
         responseBean.setRetCode(retCode);
         responseBean.setMsgJson(msgJson);
         return responseBean;
     }
 
-    private String fail(String msgJson) {
+    private static String fail(String msgJson) {
         ResponseBean responseBean = createResponseBean(0, msgJson);
         return new Gson().toJson(responseBean);
     }
 
-    private String success(String msgJson) {
+    private static String success(String msgJson) {
         ResponseBean responseBean = createResponseBean(1, msgJson);
         return new Gson().toJson(responseBean);
     }
 
-    private String progress(String msgJson) {
+    private static String progress(String msgJson) {
         ResponseBean responseBean = createResponseBean(2, msgJson);
         return new Gson().toJson(responseBean);
     }
@@ -168,7 +165,7 @@ public class AIDLServiceImpl {
     /**
      * 回调返回失败结果
      */
-    private void callbackFail(ILTAidlCallback callback, String msgJson) {
+    public static void callbackFail(ILTAidlCallback callback, String msgJson) {
         try {
             if (callback != null) {
                 callback.callback(fail(msgJson));
@@ -181,7 +178,7 @@ public class AIDLServiceImpl {
     /**
      * 回调返回正确结果
      */
-    public void callbackSuccess(ILTAidlCallback callback, String msgJson) {
+    public static void callbackSuccess(ILTAidlCallback callback, String msgJson) {
         try {
             if (callback != null) {
                 callback.callback(success(msgJson));
@@ -194,7 +191,7 @@ public class AIDLServiceImpl {
     /**
      * 回调返回过程信息
      */
-    public void callbackProgress(ILTAidlCallback callback, String msgJson) {
+    public static void callbackProgress(ILTAidlCallback callback, String msgJson) {
 
         try {
             if (callback != null) {

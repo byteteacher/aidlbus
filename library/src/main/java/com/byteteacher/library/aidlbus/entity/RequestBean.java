@@ -9,6 +9,7 @@ public class RequestBean {
     private String methodName;
     private String paramJson;
     private String packageName;
+    private String tag;
 
     public RequestBean() {
     }
@@ -18,6 +19,7 @@ public class RequestBean {
         this.methodName = builder.methodName;
         this.paramJson = builder.paramJson;
         this.packageName = builder.packageName;
+        this.tag = builder.tag;
     }
 
     public String getMainCode() {
@@ -52,6 +54,13 @@ public class RequestBean {
         this.packageName = packageName;
     }
 
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
 
     public static final class Builder {
 
@@ -59,6 +68,7 @@ public class RequestBean {
         String methodName;
         String paramJson;
         String packageName;
+        String tag;
 
 
         public Builder() {
@@ -84,6 +94,10 @@ public class RequestBean {
             return this;
         }
 
+        public Builder tag(String tag) {
+            this.tag = tag;
+            return this;
+        }
 
         public RequestBean build() {
             return new RequestBean(this);
